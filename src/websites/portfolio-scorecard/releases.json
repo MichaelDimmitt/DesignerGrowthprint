@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.18",
+      "file": "portfolio-scorecard-v0.18.html",
+      "date": "2026-03-17",
+      "description": "REQ-15: Accessibility pass — typography scale, 12px floor, prefers-reduced-motion",
+      "cheeky": false
+    },
+    {
       "version": "v0.17",
       "file": "portfolio-scorecard-v0.17.html",
       "date": "2026-03-17",
