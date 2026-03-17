@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.25",
+      "file": "portfolio-scorecard-v0.25.html",
+      "date": "2026-03-17",
+      "description": "Fix print layout: targeted section breaks, no orphaned ladders, full bar labels",
+      "cheeky": false
+    },
+    {
       "version": "v0.24",
       "file": "portfolio-scorecard-v0.24.html",
       "date": "2026-03-17",
