@@ -1,4 +1,11 @@
 # Portfolio Scorecard — Requirements
+
+<img src="../assets/brand/logo.png" width="300" alt="Designer Growthprint Logo">
+
+> [!CAUTION]
+> **DEVELOPMENT STATUS: NON-ACTIONABLE**
+> These requirements are currently in the research and definition phase. They are **not yet ready for implementation**. Before building, a formal discussion is required to resolve open questions and refine the technical strategy.
+
 ## Archetype Section Updates
 
 **Source:** Post-meeting notes · March 16, 2026
