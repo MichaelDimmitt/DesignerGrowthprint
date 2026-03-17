@@ -1,5 +1,7 @@
 # Designer Growthprint
 
+<img src="assets/brand/logo.png" width="400" alt="Designer Growthprint Logo">
+
 Self-assessment tools for designers to understand their skills, archetypes, and career growth paths.
 
 ## What's Inside

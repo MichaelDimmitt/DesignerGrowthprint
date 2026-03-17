@@ -6,6 +6,10 @@ designer-growthprint/
 ├── # Orientation — auto-loaded by Claude Code
 ├── CLAUDE.md
 │
+├── # Project branding and visual assets
+├── assets/
+│   └── brand/                   ← Logos, icons, brand marks
+│
 ├── # Human-facing project overview
 ├── README.md
 │
