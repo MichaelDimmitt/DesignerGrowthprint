@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.12",
+      "file": "portfolio-scorecard-v0.12.html",
+      "date": "2026-03-17",
+      "description": "REQ-12: Added General Feedback freeform text section",
+      "cheeky": false
+    },
+    {
       "version": "v0.11",
       "file": "portfolio-scorecard-v0.11.html",
       "date": "2026-03-17",
