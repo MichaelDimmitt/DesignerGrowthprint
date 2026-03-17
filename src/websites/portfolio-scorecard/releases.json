@@ -2,6 +2,20 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.17",
+      "file": "portfolio-scorecard-v0.17.html",
+      "date": "2026-03-17",
+      "description": "REQ-10: Added shareable URL and QR code functionality",
+      "cheeky": false
+    },
+    {
+      "version": "v0.16",
+      "file": "portfolio-scorecard-v0.16.html",
+      "date": "2026-03-17",
+      "description": "REQ-14: Added AI Tools & Fluency section",
+      "cheeky": false
+    },
+    {
       "version": "v0.15",
       "file": "portfolio-scorecard-v0.15.html",
       "date": "2026-03-17",
