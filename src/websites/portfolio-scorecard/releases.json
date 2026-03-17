@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.27",
+      "file": "portfolio-scorecard-v0.27.html",
+      "date": "2026-03-17",
+      "description": "Print: page break before every section",
+      "cheeky": false
+    },
+    {
       "version": "v0.26",
       "file": "portfolio-scorecard-v0.26.html",
       "date": "2026-03-17",
