@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.14",
+      "file": "portfolio-scorecard-v0.14.html",
+      "date": "2026-03-17",
+      "description": "REQ-09: Replaced Print with Download PDF button",
+      "cheeky": false
+    },
+    {
       "version": "v0.13",
       "file": "portfolio-scorecard-v0.13.html",
       "date": "2026-03-17",
