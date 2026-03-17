@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.22",
+      "file": "portfolio-scorecard-v0.22.html",
+      "date": "2026-03-17",
+      "description": "Rename Home Depot to Career Blueprint; style fork indicator to match section labels",
+      "cheeky": false
+    },
+    {
       "version": "v0.21",
       "file": "portfolio-scorecard-v0.21.html",
       "date": "2026-03-17",
