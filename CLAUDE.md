@@ -60,6 +60,26 @@ transcripts/                           → Conversation history from claude.ai (
 
 Each tool iteration gets a new versioned file: `portfolio-scorecard-v0.1.html`, `portfolio-scorecard-v0.2.html`, etc. Always create a new version file. Never overwrite the previous version.
 
+**IMPORTANT: When making changes to any tool, you MUST:**
+
+1. Copy the latest version to a new versioned file (e.g., `v0.2.html` → `v0.3.html`)
+2. Make your changes in the new file only
+3. Update the tool's `releases.json` with the new version:
+
+```json
+{
+  "version": "v0.3",
+  "file": "tool-name-v0.3.html",
+  "date": "YYYY-MM-DD",
+  "description": "Brief description of what changed",
+  "cheeky": false
+}
+```
+
+4. Add the new release at the TOP of the `releases` array (latest first)
+
+The hub page (`src/websites/index.html`) reads from these `releases.json` files to populate version dropdowns and descriptions.
+
 ## Key Patterns in the Codebase
 
 - **Single-file HTML apps**: React 18 via CDN, inline `<style>` blocks with CSS custom properties, inline `<script type="text/babel">` blocks
@@ -90,6 +110,6 @@ REQ-01 through REQ-12 and REQ-14 through REQ-16 are ready to build. REQ-13 (Port
 1. Read the relevant engine doc before touching scoring logic
 2. Read the skin doc before touching visual presentation
 3. Read the full REQ spec before implementing a requirement
-4. Create a new versioned file for each iteration
+4. **Create a new versioned file for each iteration and update releases.json** (see Versioning Convention above)
 5. Engine changes first, then skin changes — never both at once
 6. Open the HTML file directly in a browser to test (no build step)
