@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.19",
+      "file": "portfolio-scorecard-v0.19.html",
+      "date": "2026-03-17",
+      "description": "REQ-13: Portfolio Purpose Framework — Competence / Identity / Process lens view",
+      "cheeky": false
+    },
+    {
       "version": "v0.18",
       "file": "portfolio-scorecard-v0.18.html",
       "date": "2026-03-17",
