@@ -1395,9 +1395,9 @@ Section 00 (Context) should start at the top of page 1 with no leading break.
   /* Exception: keep Section 00 on page 1, no leading break */
   .main > .section:first-child { break-before: auto; }
 
-  /* Each case study block starts a new page if there are multiple */
-  .cs-block { break-before: page; }
-  .cs-block:first-child { break-before: auto; }
+  /* Case study page breaks: only when 3+ case studies exist.
+     Small/short sections (1–2 studies) stay together — no wasted pages. */
+  .cs-blocks-3plus .cs-block + .cs-block { break-before: page; }
 
   /* Hide interactive-only controls */
   .ladder-mode-toggle, .rp-btn-row { display: none; }
@@ -1413,7 +1413,7 @@ None — print is stateless (`window.print()`).
 
 ### Open questions
 
-1. **Case study page breaks** — should every `.cs-block` get `break-before: page`, or only when there are 3 or more case studies? Breaking on every one with just 1–2 case studies wastes paper.
+None. Case study page breaks apply only when there are 3 or more case studies. With 1–2, all studies stay together — small sections should not break. Apply a `.cs-blocks-3plus` class to the case studies container when `caseStudies.length >= 3` and target `break-before: page` against that class.
 
 ---
 
@@ -1573,5 +1573,5 @@ const LENSES = {
 | REQ-15 | Accessibility pass & typography scale | Ready to build (Phase 1 type scale, Phase 2 full WCAG audit) | None |
 | REQ-16 | Rename "Case Studies" → "Project / Case Study" | Ready to build | None |
 | REQ-18 | Career Blueprint track layout — remove card, keep label color | Ready to build | None |
-| REQ-19 | Print button + page-break print layout | Ready to build | 1 (where exactly to break between case studies) |
+| REQ-19 | Print button + page-break print layout | Ready to build | None |
 | REQ-13 | Portfolio Purpose Framework & Leadership dims | Brainstorming (always last — requires scorecard version bump) | 4 (scope, placement, lens visibility, standalone vs integrated) |
