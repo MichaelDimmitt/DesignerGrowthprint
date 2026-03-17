@@ -53,13 +53,27 @@ The tools recognize seven designer archetypes:
 
 ## Quick Start
 
-No build step. Open any HTML file in a browser.
+No build step. Open the hub page to browse all tools:
+
+```bash
+open src/websites/index.html
+```
+
+Or open any tool directly:
 
 ```bash
 open src/websites/portfolio-scorecard/portfolio-scorecard-v0.1.html
 ```
 
-No build step required — these are self-contained HTML files with embedded CSS and JavaScript.
+## Versioning
+
+Each tool maintains multiple versions for iteration and experimentation. The hub page includes a version selector that lets you:
+
+- Launch the latest version (default)
+- Time-travel to previous versions
+- See what changed in each version
+
+Version info is stored in `releases.json` files within each tool folder.
 
 ## License
 

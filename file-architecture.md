@@ -1,7 +1,7 @@
 # File Architecture
 
 ```
-designers-compass/
+designer-growthprint/
 │
 ├── # Orientation — auto-loaded by Claude Code
 ├── CLAUDE.md
@@ -15,18 +15,21 @@ designers-compass/
 ├── src/
 │   └── websites/
 │       │
-│       ├── # Future router / hub page
+│       ├── # Hub page with version selector
 │       ├── index.html
+│       ├── index-v0.2.html              ← Timeline version selector variant
 │       │
 │       ├── portfolio-scorecard/
+│       │   ├── releases.json            ← Version metadata (descriptions, dates)
 │       │   ├── portfolio-scorecard-v0.1.html
-│       │   ├── portfolio-scorecard-v0.2.html
-│       │   └── portfolio-scorecard-v0.3.html
+│       │   └── portfolio-scorecard-v0.2.html
 │       │
 │       ├── ux-designer-scorecard/
+│       │   ├── releases.json
 │       │   └── ux-designer-scorecard-v0.1.html
 │       │
 │       └── competency-radar/
+│           ├── releases.json
 │           └── competency-radar-v0.1.html
 │
 ├── # What Claude Code READS to understand the system
@@ -55,3 +58,28 @@ designers-compass/
 ├── .gitignore
 └── LICENSE
 ```
+
+## releases.json Format
+
+Each tool folder contains a `releases.json` that drives the hub page version selector:
+
+```json
+{
+  "tool": "Portfolio Scorecard",
+  "releases": [
+    {
+      "version": "v0.2",
+      "file": "portfolio-scorecard-v0.2.html",
+      "date": "2024-03-17",
+      "description": "Description of what changed",
+      "cheeky": false
+    }
+  ]
+}
+```
+
+- **version**: Display label (e.g., "v0.1", "v0.2")
+- **file**: Filename within the tool folder
+- **date**: Release date (YYYY-MM-DD)
+- **description**: Shown in hub page when version is selected
+- **cheeky**: If true, description gets playful purple styling
