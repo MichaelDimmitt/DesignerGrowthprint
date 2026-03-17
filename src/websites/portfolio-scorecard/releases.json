@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.23",
+      "file": "portfolio-scorecard-v0.23.html",
+      "date": "2026-03-17",
+      "description": "Career Blueprint track labels: remove card wrapper, keep sky/purple title color",
+      "cheeky": false
+    },
+    {
       "version": "v0.22",
       "file": "portfolio-scorecard-v0.22.html",
       "date": "2026-03-17",

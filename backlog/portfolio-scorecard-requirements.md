@@ -1291,6 +1291,56 @@ Variable names like `caseStudies`, `CS_DIMS`, `csScores`, etc. can stay unchange
 
 ---
 
+## REQ-18: Career Blueprint Track Layout — Remove Card, Keep Label Color
+
+**Status:** Ready to build
+**Priority:** —
+**Section affected:** Section 00 (Context) → Career stage → Career Blueprint ladder → Fork tracks
+
+### Current state
+
+The Individual Contributor and Management tracks after the Fork Point are wrapped in `.hd-track` cards — each has a border, background (`var(--card-bg)`), padding, and border-radius. The buttons inside stack vertically. The track labels use `var(--text-muted)` with a colored `::before` dot (sky for IC, purple for management).
+
+### Requirement
+
+Remove the card wrapper from both tracks. The layout and visual weight should match the `hd-section` sections above the fork (Entry Points, Core Progression): flat, no border, no background. Track buttons should flow horizontally (matching `hd-row` default). The track label text color should carry the accent color (sky for Individual Contributor, purple for Management) so the two tracks remain visually differentiated without the card.
+
+### Suggested implementation
+
+**CSS — replace `.hd-track` card rules:**
+
+```css
+/* Before */
+.hd-track {
+  border: 1px solid var(--border); border-radius: 8px; padding: 12px;
+  background: var(--card-bg);
+}
+.hd-track-label { color: var(--text-muted); ... }
+.hd-track-label::before { content: ''; width: 8px; height: 8px; border-radius: 50%; }
+.hd-track.ic .hd-track-label::before { background: var(--sky); }
+.hd-track.mgmt .hd-track-label::before { background: var(--purple); }
+.hd-track .hd-row { flex-direction: column; }
+
+/* After */
+.hd-track { display: flex; flex-direction: column; gap: 6px; }
+.hd-track-label { ... } /* same font/size/spacing, no color default */
+.hd-track.ic .hd-track-label { color: var(--sky); }
+.hd-track.mgmt .hd-track-label { color: var(--purple); }
+/* Remove .hd-track .hd-row override — buttons flow horizontally */
+```
+
+No JSX changes needed.
+
+### State changes
+
+None — purely a skin/layout change.
+
+### Open questions
+
+None.
+
+---
+
 ## REQ-13: Portfolio Purpose Framework & Leadership Dimensions
 
 **Status:** Brainstorming — needs exploration before build
@@ -1446,4 +1496,5 @@ const LENSES = {
 | REQ-14 | AI Tools & Fluency (Adaptability) | Ready to build | 1 (broader adaptability scope — what else belongs here?) |
 | REQ-15 | Accessibility pass & typography scale | Ready to build (Phase 1 type scale, Phase 2 full WCAG audit) | None |
 | REQ-16 | Rename "Case Studies" → "Project / Case Study" | Ready to build | None |
+| REQ-18 | Career Blueprint track layout — remove card, keep label color | Ready to build | None |
 | REQ-13 | Portfolio Purpose Framework & Leadership dims | Brainstorming (always last — requires scorecard version bump) | 4 (scope, placement, lens visibility, standalone vs integrated) |
