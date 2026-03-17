@@ -306,6 +306,21 @@
       border-color: var(--accent-purple);
     }
 
+    /* Version Description */
+    .version-description {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--text-muted);
+      padding-top: 12px;
+      line-height: 1.5;
+      min-height: 2.5em;
+    }
+
+    .version-description.cheeky {
+      color: var(--accent-purple);
+    }
+
     /* Footer */
     footer {
       background: var(--bg-panel);
@@ -377,13 +392,14 @@
         </div>
         <div class="tool-footer">
           <div class="version-select">
-            <select id="portfolio-version" onchange="updateLaunchLink('portfolio')">
-              <option value="portfolio-scorecard/portfolio-scorecard-v0.2.html">v0.2 (latest)</option>
-              <option value="portfolio-scorecard/portfolio-scorecard-v0.1.html">v0.1</option>
+            <select id="portfolio-version" onchange="updateVersion('portfolio')">
+              <option value="portfolio-scorecard/portfolio-scorecard-v0.2.html" data-desc="Needless duplicate — same as v0.1, here for demo purposes" data-cheeky="true">v0.2 (latest)</option>
+              <option value="portfolio-scorecard/portfolio-scorecard-v0.1.html" data-desc="The original — where it all began">v0.1</option>
             </select>
           </div>
           <a href="portfolio-scorecard/portfolio-scorecard-v0.2.html" id="portfolio-launch" class="launch-btn">Launch &#8594;</a>
         </div>
+        <div class="version-description cheeky" id="portfolio-desc">Needless duplicate — same as v0.1, here for demo purposes</div>
       </div>
 
       <div class="tool-card coral">
@@ -399,12 +415,13 @@
         </div>
         <div class="tool-footer">
           <div class="version-select">
-            <select id="ux-version" onchange="updateLaunchLink('ux')">
-              <option value="ux-designer-scorecard/ux-designer-scorecard-v0.1.html">v0.1 (latest)</option>
+            <select id="ux-version" onchange="updateVersion('ux')">
+              <option value="ux-designer-scorecard/ux-designer-scorecard-v0.1.html" data-desc="The original — where it all began">v0.1 (latest)</option>
             </select>
           </div>
           <a href="ux-designer-scorecard/ux-designer-scorecard-v0.1.html" id="ux-launch" class="launch-btn">Launch &#8594;</a>
         </div>
+        <div class="version-description" id="ux-desc">The original — where it all began</div>
       </div>
 
       <div class="tool-card purple">
@@ -420,12 +437,13 @@
         </div>
         <div class="tool-footer">
           <div class="version-select">
-            <select id="radar-version" onchange="updateLaunchLink('radar')">
-              <option value="competency-radar/competency-radar-v0.1.html">v0.1 (latest)</option>
+            <select id="radar-version" onchange="updateVersion('radar')">
+              <option value="competency-radar/competency-radar-v0.1.html" data-desc="The original — where it all began">v0.1 (latest)</option>
             </select>
           </div>
           <a href="competency-radar/competency-radar-v0.1.html" id="radar-launch" class="launch-btn">Launch &#8594;</a>
         </div>
+        <div class="version-description" id="radar-desc">The original — where it all began</div>
       </div>
     </div>
   </main>
@@ -435,10 +453,24 @@
   </footer>
 
   <script>
-    function updateLaunchLink(tool) {
+    function updateVersion(tool) {
       const select = document.getElementById(tool + '-version');
       const launch = document.getElementById(tool + '-launch');
+      const desc = document.getElementById(tool + '-desc');
+      const selectedOption = select.options[select.selectedIndex];
+
+      // Update launch link
       launch.href = select.value;
+
+      // Update description
+      desc.textContent = selectedOption.dataset.desc;
+
+      // Toggle cheeky style
+      if (selectedOption.dataset.cheeky === 'true') {
+        desc.classList.add('cheeky');
+      } else {
+        desc.classList.remove('cheeky');
+      }
     }
   </script>
 </body>
