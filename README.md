@@ -4,18 +4,22 @@ Self-assessment tools for designers to understand their skills, archetypes, and 
 
 ## What's Inside
 
-### Web Applications (`src/websites/`)
+### Web Applications/Tools (`src/websites/`)
 
-- **Portfolio Scorecard** — Rate your portfolio across key dimensions and get actionable feedback
-- **UX Designer Scorecard** — Self-assess across 10 craft skills from Research to Design Ops
-- **Competency Radar** — Visualize your leadership competencies across career levels and archetypes
+**Portfolio Scorecard** — Rate a designer's portfolio across three sections: shell (first impression, navigation, brand), case studies (problem framing, process, outcomes), and strategy (differentiation, positioning). Produces a composite score with per-section breakdowns and growth areas.
+
+**UX Designer Scorecard** — Self-assessment covering 10 craft skills, 6 soft skills, 10 professional assets, and 10 experience types. Auto-detects a designer archetype from skill ratings. Total score out of 130.
+
+**Competency Radar** — Benchmark radar charts showing expected competency profiles for 7 designer archetypes across 5 career levels. Based on the Korn Ferry Leadership Architect framework, adapted for design.
+
+## How it works:
 
 ### Specifications (`specs/`)
 
 Documentation separating concerns:
 
-- **Engine** — Data models, scoring algorithms, and logic (what the system *knows*)
-- **Skin** — Visual design language, typography, and color system (how it *looks*)
+- **Engine** — Data models, scoring algorithms, and logic (what the system _knows_)
+- **Skin** — Visual design language, typography, and color system (how it _looks_)
 - **Templates** — Patterns for building new assessment tools
 
 ### Planning (`backlog/`)
@@ -47,9 +51,9 @@ The tools recognize seven designer archetypes:
 6. **Research-Led Strategist** — Evidence, insight, problem framing
 7. **Creative Technologist** — Merging code and craft
 
-## Running Locally
+## Quick Start
 
-Open any HTML file directly in a browser:
+No build step. Open any HTML file in a browser.
 
 ```bash
 open src/websites/portfolio-scorecard/portfolio-scorecard-v0.1.html

@@ -2,7 +2,10 @@
 
 ## What This Project Is
 
-The Designer's Compass — a suite of interactive workshop tools for evaluating UX designers, their portfolios, and career trajectories. Built for the Jax UX design community in Jacksonville, Florida.
+Designer Growthprint — a suite of interactive workshop tools for evaluating UX designers, their portfolios, and career trajectories. Built for the Jax UX design community in Jacksonville, Florida.
+
+Potential alternate name The Designer's Compass
+(Know where your going).
 
 Three tools exist today. All are single-file HTML applications with embedded React (CDN), CSS, and vanilla JS. No build step.
 
