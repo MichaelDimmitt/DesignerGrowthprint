@@ -125,3 +125,7 @@ Individual tool HTML files (e.g., `portfolio-scorecard-v0.5.html`) can be opened
 4. **Create a new versioned file for each iteration and update releases.json** (see Versioning Convention above)
 5. Engine changes first, then skin changes — never both at once
 6. Run `npx serve src/websites` and open the hub page to test version switching, or open individual HTML files directly
+
+## Git Commits
+
+Commit without attribution. Do not include "Generated with Claude Code" or "Co-Authored-By" lines in commit messages.
