@@ -1,0 +1,92 @@
+{
+  "uuid": "c87ec3fb-7631-4ad0-810f-4a71872f4fdd",
+  "name": "Jacksonville designers 2026 goals meetup",
+  "summary": "",
+  "model": "claude-opus-4-5-20251101",
+  "created_at": "2026-01-06T00:48:56.973713Z",
+  "updated_at": "2026-01-06T00:49:05.504948Z",
+  "settings": {
+    "enabled_web_search": true,
+    "paprika_mode": "extended",
+    "enabled_monkeys_in_a_barrel": true,
+    "enabled_saffron": false,
+    "tool_search_mode": "auto",
+    "preview_feature_uses_artifacts": true,
+    "enabled_artifacts_attachments": false,
+    "enabled_turmeric": true
+  },
+  "is_starred": false,
+  "is_temporary": false,
+  "project_uuid": "019b6c32-f85f-721b-99a0-d975572937d5",
+  "platform": "CLAUDE_AI",
+  "current_leaf_message_uuid": "019b90c7-4f10-7229-8fef-5ef623a616ee",
+  "chat_messages": [
+    {
+      "uuid": "019b90c7-4f10-7229-8fef-5ef56e23cbef",
+      "text": "",
+      "content": [
+        {
+          "start_timestamp": "2026-01-06T00:48:59.706439Z",
+          "stop_timestamp": "2026-01-06T00:48:59.706439Z",
+          "type": "text",
+          "text": "Kick off 2026 with your local design community. This is a casual meet and greet where we'll connect with fellow designers, share what we're working on, and brainstorm our design goals for the year ahead.New year, fresh start—let's figure it out together.What we'll do:\n* Meet and mingle with designers across Jacksonville\n* Brainstorm what your design goals could look like for 2026\n* Talk through how to actually achieve them—with input from people who get it\nWhether you want to learn a new tool, switch specialties, land a new role, grow your freelance business, or finally finish that side project—bring your ideas and your questions. We'll figure out the path forward together\n\nSo long! Let's shorten it",
+          "citations": []
+        }
+      ],
+      "sender": "human",
+      "index": 0,
+      "created_at": "2026-01-06T00:48:59.711537Z",
+      "updated_at": "2026-01-06T00:48:59.711537Z",
+      "truncated": false,
+      "attachments": [],
+      "files": [],
+      "files_v2": [],
+      "sync_sources": [],
+      "parent_message_uuid": "00000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "019b90c7-4f10-7229-8fef-5ef623a616ee",
+      "text": "",
+      "content": [
+        {
+          "start_timestamp": "2026-01-06T00:49:01.864408Z",
+          "stop_timestamp": "2026-01-06T00:49:03.023167Z",
+          "type": "thinking",
+          "thinking": "The user wants me to shorten the event description they provided. This is a simple text editing task - I don't need to use any computer tools for this. Let me create a more concise version of their design community meetup description.",
+          "summaries": [
+            {
+              "summary": "Thinking about condensing event promotional copy while maintaining key details."
+            },
+            {
+              "summary": "Identified straightforward editing task to condense event description."
+            }
+          ],
+          "cut_off": false,
+          "truncated": false
+        },
+        {
+          "start_timestamp": "2026-01-06T00:49:03.178961Z",
+          "stop_timestamp": "2026-01-06T00:49:05.375199Z",
+          "type": "text",
+          "text": "Here's a tightened version:\n\n---\n\n**Kick off 2026 with your local design community.** A casual meet and greet to connect with fellow Jacksonville designers and set your goals for the year ahead.\n\n**What we'll do:**\n- Meet and mingle with local designers\n- Brainstorm your 2026 design goals\n- Get real input on how to achieve them\n\nWhether you want to learn a new tool, switch specialties, land a new role, or finally finish that side project—bring your ideas. We'll figure it out together.\n\n---\n\nWant me to trim it even further, or adjust the tone?",
+          "citations": []
+        }
+      ],
+      "sender": "assistant",
+      "index": 1,
+      "created_at": "2026-01-06T00:49:05.504948Z",
+      "updated_at": "2026-01-06T00:49:05.504948Z",
+      "truncated": false,
+      "stop_reason": "stop_sequence",
+      "attachments": [],
+      "files": [],
+      "files_v2": [],
+      "sync_sources": [],
+      "parent_message_uuid": "019b90c7-4f10-7229-8fef-5ef56e23cbef"
+    }
+  ],
+  "project": {
+    "uuid": "019b6c32-f85f-721b-99a0-d975572937d5",
+    "name": "Bridging the design knowledge gap in Jacksonville"
+  }
+}
