@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.3",
+      "file": "portfolio-scorecard-v0.3.html",
+      "date": "2026-03-17",
+      "description": "REQ-01: Added explainer text to archetype section header",
+      "cheeky": false
+    },
+    {
       "version": "v0.2",
       "file": "portfolio-scorecard-v0.2.html",
       "date": "2024-03-17",
