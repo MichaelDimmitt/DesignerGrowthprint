@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.7",
+      "file": "portfolio-scorecard-v0.7.html",
+      "date": "2026-03-17",
+      "description": "REQ-05: Added Career Goal section for targeting next role",
+      "cheeky": false
+    },
+    {
       "version": "v0.6",
       "file": "portfolio-scorecard-v0.6.html",
       "date": "2026-03-17",
