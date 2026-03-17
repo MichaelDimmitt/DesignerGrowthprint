@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.26",
+      "file": "portfolio-scorecard-v0.26.html",
+      "date": "2026-03-17",
+      "description": "Print: remove S01 break, compact ladder buttons, hide results button row",
+      "cheeky": false
+    },
+    {
       "version": "v0.25",
       "file": "portfolio-scorecard-v0.25.html",
       "date": "2026-03-17",
