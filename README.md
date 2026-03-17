@@ -53,16 +53,18 @@ The tools recognize seven designer archetypes:
 
 ## Quick Start
 
-No build step. Open the hub page to browse all tools:
+No build step required. Start a local server to use the hub page:
 
 ```bash
-open src/websites/index.html
+npx serve src/websites
 ```
 
-Or open any tool directly:
+Then open `http://localhost:3000` in your browser.
+
+Or open any tool directly (no server needed):
 
 ```bash
-open src/websites/portfolio-scorecard/portfolio-scorecard-v0.1.html
+open src/websites/portfolio-scorecard/portfolio-scorecard-v0.5.html
 ```
 
 ## Versioning

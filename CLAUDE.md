@@ -105,6 +105,18 @@ REQ-01 through REQ-12 and REQ-14 through REQ-16 are ready to build. REQ-13 (Port
 3. Apply the skin (typography, colors) second
 4. Create a new versioned file in `src/websites/<tool-name>/`
 
+## Local Development
+
+The hub page (`src/websites/index.html`) fetches `releases.json` files, which requires a local server (fetch doesn't work with `file://` protocol).
+
+```bash
+npx serve src/websites
+```
+
+Then open `http://localhost:3000` in your browser.
+
+Individual tool HTML files (e.g., `portfolio-scorecard-v0.5.html`) can be opened directly in a browser without a server.
+
 ## How to Work on This Project
 
 1. Read the relevant engine doc before touching scoring logic
@@ -112,4 +124,4 @@ REQ-01 through REQ-12 and REQ-14 through REQ-16 are ready to build. REQ-13 (Port
 3. Read the full REQ spec before implementing a requirement
 4. **Create a new versioned file for each iteration and update releases.json** (see Versioning Convention above)
 5. Engine changes first, then skin changes — never both at once
-6. Open the HTML file directly in a browser to test (no build step)
+6. Run `npx serve src/websites` and open the hub page to test version switching, or open individual HTML files directly
