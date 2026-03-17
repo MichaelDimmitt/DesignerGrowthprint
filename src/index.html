@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template Router</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #f8f7f4;
+      --bg-panel: #ffffff;
+      --bg-inset: #f0efeb;
+      --text-primary: #1a1a1a;
+      --text-secondary: #5c5c5c;
+      --text-muted: #8c8c8c;
+      --accent: #e85d04;
+      --accent-light: #fff1eb;
+      --border: #e5e4e0;
+      --success: #2d6a4f;
+      --error: #c1121f;
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Anybody', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-panel);
+      border-bottom: 2px solid var(--text-primary);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .mode-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    /* Main Layout */
+    .layout {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--bg-panel);
+      border-right: 2px solid var(--text-primary);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-section {
+      padding: 20px;
+    }
+
+    .sidebar-section:not(:last-child) {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: transparent;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-tab:hover {
+      background: var(--bg-inset);
+      color: var(--text-primary);
+    }
+
+    .nav-tab.active {
+      background: var(--text-primary);
+      color: white;
+      border-color: var(--text-primary);
+    }
+
+    .nav-tab-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* External Pages List */
+    .external-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .external-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .external-item:hover {
+      background: var(--bg-inset);
+      color: var(--text-primary);
+    }
+
+    .external-item.active {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .external-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.5;
+    }
+
+    /* Add External Input */
+    .add-external {
+      display: flex;
+      gap: 8px;
+    }
+
+    .add-external input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      background: var(--bg-inset);
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .add-external input:focus {
+      border-color: var(--accent);
+    }
+
+    .add-external input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .add-btn {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--text-primary);
+      border-radius: 6px;
+      background: var(--bg-panel);
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-btn:hover {
+      background: var(--text-primary);
+      color: white;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .current-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .current-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .current-id {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      background: var(--bg-inset);
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .status-dot.ready { background: var(--success); }
+    .status-dot.loading { background: var(--accent); animation: pulse 1s infinite; }
+    .status-dot.error { background: var(--error); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Content Display */
+    .content-display {
+      flex: 1;
+      overflow: auto;
+      padding: 32px;
+      background: var(--bg-base);
+    }
+
+    .content-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .empty-graphic {
+      width: 120px;
+      height: 120px;
+      background: var(--bg-inset);
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin-bottom: 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .empty-text {
+      color: var(--text-secondary);
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    .info-card {
+      margin-top: 32px;
+      background: var(--bg-panel);
+      border: 2px solid var(--text-primary);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+      max-width: 500px;
+    }
+
+    .info-card h4 {
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .info-card code {
+      font-family: 'DM Mono', monospace;
+      background: var(--bg-inset);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    /* Loading State */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Error State */
+    .error-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .error-title {
+      font-size: 1.3rem;
+      color: var(--error);
+      margin-bottom: 8px;
+    }
+
+    .error-text {
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">T</div>
+      Template Router
+    </div>
+    <div class="header-info">
+      <span class="mode-badge">&lt;template&gt; powered</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="section-label">Inline Templates</div>
+        <nav class="nav-tabs" id="inlineNav">
+          <button class="nav-tab" data-template="welcome">
+            <span class="nav-tab-icon">👋</span>
+            Welcome
+          </button>
+          <button class="nav-tab" data-template="features">
+            <span class="nav-tab-icon">✨</span>
+            Features
+          </button>
+          <button class="nav-tab" data-template="interactive">
+            <span class="nav-tab-icon">🎮</span>
+            Interactive
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-section" style="flex: 1; display: flex; flex-direction: column;">
+        <div class="section-label">External Pages</div>
+        <div class="external-list" id="externalNav">
+          <div class="external-item" data-src="pages/home.html">
+            <span class="external-dot"></span>
+            pages/home.html
+          </div>
+          <div class="external-item" data-src="pages/about.html">
+            <span class="external-dot"></span>
+            pages/about.html
+          </div>
+          <div class="external-item" data-src="pages/contact.html">
+            <span class="external-dot"></span>
+            pages/contact.html
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-label">Add External</div>
+        <div class="add-external">
+          <input type="text" id="addInput" placeholder="pages/file.html">
+          <button class="add-btn" id="addBtn">+</button>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="toolbar">
+        <div class="current-info">
+          <span class="current-label">Loaded:</span>
+          <span class="current-id" id="currentId">none</span>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot ready" id="statusDot"></span>
+          <span id="statusText">Ready</span>
+        </div>
+      </div>
+
+      <div class="content-display">
+        <div class="content-wrapper" id="contentWrapper">
+          <div class="empty-state">
+            <div class="empty-graphic">📄</div>
+            <h2 class="empty-title">No Template Loaded</h2>
+            <p class="empty-text">Select an inline template from the sidebar or load an external HTML file to see it rendered here.</p>
+            
+            <div class="info-card">
+              <h4>🔧 How Template Loading Works</h4>
+              <p>
+                <strong>Inline templates:</strong> Content lives in <code>&lt;template&gt;</code> tags in this HTML file. When activated, the content is cloned via <code>template.content.cloneNode(true)</code> and inserted into the DOM.
+              </p>
+              <p style="margin-top: 12px;">
+                <strong>External pages:</strong> HTML is fetched, parsed into a temporary <code>&lt;template&gt;</code> element, then cloned and inserted. This ensures scripts execute properly when content enters the live DOM.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================
+       INLINE TEMPLATES
+       These are inert until cloned and inserted
+       ======================================== -->
+
+  <template id="template-welcome">
+    <style>
+      .welcome-page {
+        font-family: 'Anybody', sans-serif;
+      }
+      .welcome-hero {
+        background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);
+        padding: 60px 48px;
+        border-radius: 16px;
+        color: white;
+        margin-bottom: 32px;
+      }
+      .welcome-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin: 0 0 12px 0;
+        letter-spacing: -0.03em;
+      }
+      .welcome-hero p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin: 0;
+        max-width: 500px;
+      }
+      .welcome-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+      .welcome-card {
+        background: white;
+        border: 2px solid #1a1a1a;
+        border-radius: 12px;
+        padding: 24px;
+      }
+      .welcome-card h3 {
+        font-size: 1.1rem;
+        margin: 0 0 8px 0;
+      }
+      .welcome-card p {
+        color: #5c5c5c;
+        font-size: 0.9rem;
+        margin: 0;
+        line-height: 1.5;
+      }
+    </style>
+    <div class="welcome-page">
+      <div class="welcome-hero">
+        <h1>Welcome!</h1>
+        <p>This content was loaded from an inline &lt;template&gt; element. It was inert HTML until you clicked to activate it.</p>
+      </div>
+      <div class="welcome-grid">
+        <div class="welcome-card">
+          <h3>🚀 Zero Network</h3>
+          <p>Inline templates require no fetching — content is already in the document.</p>
+        </div>
+        <div class="welcome-card">
+          <h3>💤 Inert Until Needed</h3>
+          <p>Scripts don't run and images don't load until the template is cloned.</p>
+        </div>
+        <div class="welcome-card">
+          <h3>📋 Easy Cloning</h3>
+          <p>Use cloneNode(true) to create fresh copies each time.</p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="template-features">
+    <style>
+      .features-page {
+        font-family: 'Anybody', sans-serif;
+      }
+      .features-header {
+        margin-bottom: 40px;
+      }
+      .features-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin: 0 0 8px 0;
+      }
+      .features-header p {
+        color: #5c5c5c;
+        margin: 0;
+      }
+      .feature-block {
+        background: white;
+        border: 2px solid #1a1a1a;
+        border-radius: 12px;
+        padding: 28px;
+        margin-bottom: 20px;
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: #fff1eb;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+      .feature-content h3 {
+        font-size: 1.1rem;
+        margin: 0 0 8px 0;
+      }
+      .feature-content p {
+        color: #5c5c5c;
+        font-size: 0.9rem;
+        margin: 0;
+        line-height: 1.6;
+      }
+      .feature-code {
+        font-family: 'DM Mono', monospace;
+        background: #f0efeb;
+        padding: 16px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        margin-top: 12px;
+        overflow-x: auto;
+      }
+    </style>
+    <div class="features-page">
+      <div class="features-header">
+        <h1>Template Features</h1>
+        <p>The &lt;template&gt; element provides unique capabilities for dynamic content</p>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-icon">📦</div>
+        <div class="feature-content">
+          <h3>Document Fragment</h3>
+          <p>Template content is stored as a DocumentFragment, not rendered in the main DOM tree. This means no layout calculations, no script execution, and no resource loading until activated.</p>
+          <div class="feature-code">const fragment = template.content.cloneNode(true);</div>
+        </div>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-content">
+          <h3>Reusable Clones</h3>
+          <p>Each call to cloneNode(true) creates a fresh copy. Perfect for lists, repeated UI components, or resetting state.</p>
+          <div class="feature-code">container.appendChild(template.content.cloneNode(true));</div>
+        </div>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-content">
+          <h3>Script Activation</h3>
+          <p>Scripts inside templates don't execute until the cloned content is inserted into the live DOM. This gives you full control over when code runs.</p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="template-interactive">
+    <style>
+      .interactive-page {
+        font-family: 'Anybody', sans-serif;
+      }
+      .interactive-header {
+        margin-bottom: 32px;
+      }
+      .interactive-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin: 0 0 8px 0;
+      }
+      .interactive-header p {
+        color: #5c5c5c;
+        margin: 0;
+      }
+      .demo-section {
+        background: white;
+        border: 2px solid #1a1a1a;
+        border-radius: 12px;
+        padding: 32px;
+        margin-bottom: 24px;
+      }
+      .demo-section h3 {
+        font-size: 1rem;
+        margin: 0 0 20px 0;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e4e0;
+      }
+      .counter-demo {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      .counter-value {
+        font-size: 4rem;
+        font-weight: 800;
+        color: #e85d04;
+        font-family: 'DM Mono', monospace;
+        min-width: 120px;
+        text-align: center;
+      }
+      .counter-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .counter-btn {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #1a1a1a;
+        border-radius: 8px;
+        background: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .counter-btn:hover {
+        background: #1a1a1a;
+        color: white;
+      }
+      .time-display {
+        font-family: 'DM Mono', monospace;
+        font-size: 2.5rem;
+        color: #1a1a1a;
+      }
+      .log-area {
+        background: #1a1a1a;
+        color: #4ade80;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.8rem;
+        padding: 16px;
+        border-radius: 8px;
+        height: 120px;
+        overflow-y: auto;
+      }
+      .log-entry {
+        margin-bottom: 4px;
+        opacity: 0.9;
+      }
+    </style>
+    <div class="interactive-page">
+      <div class="interactive-header">
+        <h1>Interactive Demo</h1>
+        <p>Proof that scripts execute when template content is cloned into the DOM</p>
+      </div>
+
+      <div class="demo-section">
+        <h3>⏱️ Live Clock (interval running)</h3>
+        <div class="time-display" id="templateClock">--:--:--</div>
+      </div>
+
+      <div class="demo-section">
+        <h3>🔢 Counter (click handlers working)</h3>
+        <div class="counter-demo">
+          <div class="counter-value" id="templateCounter">0</div>
+          <div class="counter-btns">
+            <button class="counter-btn" id="incrementBtn">+</button>
+            <button class="counter-btn" id="decrementBtn">−</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-section">
+        <h3>📝 Console Log</h3>
+        <div class="log-area" id="logArea">
+          <div class="log-entry">> Template script initialized</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        // This script runs when the template is cloned and inserted
+        const logArea = document.getElementById('logArea');
+        
+        function log(msg) {
+          const entry = document.createElement('div');
+          entry.className = 'log-entry';
+          entry.textContent = `> ${msg}`;
+          logArea.appendChild(entry);
+          logArea.scrollTop = logArea.scrollHeight;
+        }
+
+        log('Script executing inside template content!');
+
+        // Clock
+        const clockEl = document.getElementById('templateClock');
+        function updateClock() {
+          clockEl.textContent = new Date().toLocaleTimeString();
+        }
+        updateClock();
+        const clockInterval = setInterval(updateClock, 1000);
+        log('Clock interval started');
+
+        // Counter
+        let count = 0;
+        const counterEl = document.getElementById('templateCounter');
+        
+        document.getElementById('incrementBtn').addEventListener('click', () => {
+          count++;
+          counterEl.textContent = count;
+          log(`Counter incremented to ${count}`);
+        });
+
+        document.getElementById('decrementBtn').addEventListener('click', () => {
+          count--;
+          counterEl.textContent = count;
+          log(`Counter decremented to ${count}`);
+        });
+
+        log('Event listeners attached');
+
+        // Store interval for cleanup
+        window._templateClockInterval = clockInterval;
+      })();
+    </script>
+  </template>
+
+  <!-- ========================================
+       ROUTER SCRIPT
+       ======================================== -->
+  <script>
+    const state = {
+      current: null,
+      type: null // 'inline' or 'external'
+    };
+
+    // DOM refs
+    const contentWrapper = document.getElementById('contentWrapper');
+    const currentIdEl = document.getElementById('currentId');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const inlineNav = document.getElementById('inlineNav');
+    const externalNav = document.getElementById('externalNav');
+    const addInput = document.getElementById('addInput');
+    const addBtn = document.getElementById('addBtn');
+
+    // Initialize
+    function init() {
+      // Inline template clicks
+      inlineNav.addEventListener('click', (e) => {
+        const tab = e.target.closest('.nav-tab');
+        if (tab) loadInlineTemplate(tab.dataset.template);
+      });
+
+      // External page clicks
+      externalNav.addEventListener('click', (e) => {
+        const item = e.target.closest('.external-item');
+        if (item) loadExternalPage(item.dataset.src);
+      });
+
+      // Add external page
+      addBtn.addEventListener('click', addExternalPage);
+      addInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addExternalPage();
+      });
+    }
+
+    // Update active states
+    function updateActiveStates(id, type) {
+      document.querySelectorAll('.nav-tab, .external-item').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      if (type === 'inline') {
+        const tab = document.querySelector(`.nav-tab[data-template="${id}"]`);
+        if (tab) tab.classList.add('active');
+      } else {
+        const item = document.querySelector(`.external-item[data-src="${id}"]`);
+        if (item) item.classList.add('active');
+      }
+    }
+
+    // Set status
+    function setStatus(status, text) {
+      statusDot.className = 'status-dot ' + status;
+      statusText.textContent = text;
+    }
+
+    // Cleanup before loading new content
+    function cleanup() {
+      // Clear any intervals from previous templates
+      if (window._templateClockInterval) {
+        clearInterval(window._templateClockInterval);
+        window._templateClockInterval = null;
+      }
+    }
+
+    // Load inline template
+    function loadInlineTemplate(templateId) {
+      cleanup();
+      
+      const template = document.getElementById(`template-${templateId}`);
+      if (!template) {
+        showError(`Template "template-${templateId}" not found`);
+        return;
+      }
+
+      setStatus('loading', 'Cloning...');
+      state.current = templateId;
+      state.type = 'inline';
+      currentIdEl.textContent = `template-${templateId}`;
+      updateActiveStates(templateId, 'inline');
+
+      // Clear and clone template content into the wrapper
+      contentWrapper.innerHTML = '';
+      
+      // Clone the template content (this activates scripts!)
+      const clone = template.content.cloneNode(true);
+      contentWrapper.appendChild(clone);
+
+      setStatus('ready', 'Loaded');
+    }
+
+    // Load external page via template
+    async function loadExternalPage(src) {
+      cleanup();
+      
+      setStatus('loading', 'Fetching...');
+      state.current = src;
+      state.type = 'external';
+      currentIdEl.textContent = src;
+      updateActiveStates(src, 'external');
+
+      // Show loading state
+      contentWrapper.innerHTML = `
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <span>Loading ${src}...</span>
+        </div>
+      `;
+
+      try {
+        const response = await fetch(src);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const html = await response.text();
+        
+        // Parse HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Create a template element to hold the content
+        const template = document.createElement('template');
+        
+        // Extract styles from head and body content
+        const styles = doc.head ? doc.head.querySelectorAll('style, link[rel="stylesheet"]') : [];
+        const bodyContent = doc.body ? doc.body.innerHTML : html;
+
+        // Build template innerHTML with styles + body
+        let templateHTML = '';
+        styles.forEach(style => {
+          templateHTML += style.outerHTML;
+        });
+        templateHTML += bodyContent;
+        
+        template.innerHTML = templateHTML;
+
+        // Clear container
+        contentWrapper.innerHTML = '';
+
+        // Clone template content (this activates everything!)
+        const clone = template.content.cloneNode(true);
+        
+        // Handle scripts specially - cloneNode doesn't execute them
+        // We need to recreate script elements for them to run
+        const scripts = clone.querySelectorAll('script');
+
+        scripts.forEach(oldScript => {
+          const newScript = document.createElement('script');
+          
+          // Copy attributes
+          Array.from(oldScript.attributes).forEach(attr => {
+            newScript.setAttribute(attr.name, attr.value);
+          });
+          
+          // Copy inline content
+          if (oldScript.textContent) {
+            newScript.textContent = oldScript.textContent;
+          }
+          
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+
+        contentWrapper.appendChild(clone);
+        setStatus('ready', 'Loaded');
+
+      } catch (error) {
+        console.error('Load error:', error);
+        showError(error.message);
+        setStatus('error', 'Failed');
+      }
+    }
+
+    // Show error
+    function showError(message) {
+      contentWrapper.innerHTML = `
+        <div class="error-state">
+          <div class="error-icon">⚠️</div>
+          <h3 class="error-title">Failed to Load</h3>
+          <p class="error-text">${message}</p>
+        </div>
+      `;
+    }
+
+    // Add external page to list
+    function addExternalPage() {
+      const src = addInput.value.trim();
+      if (!src) return;
+
+      // Check if exists
+      if (document.querySelector(`.external-item[data-src="${src}"]`)) {
+        addInput.value = '';
+        loadExternalPage(src);
+        return;
+      }
+
+      const item = document.createElement('div');
+      item.className = 'external-item';
+      item.dataset.src = src;
+      item.innerHTML = `
+        <span class="external-dot"></span>
+        ${src}
+      `;
+      
+      externalNav.appendChild(item);
+      addInput.value = '';
+      
+      // Auto-load
+      loadExternalPage(src);
+    }
+
+    // Start
+    init();
+  </script>
+</body>
+</html>
