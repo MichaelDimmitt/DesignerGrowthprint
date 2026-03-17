@@ -1341,6 +1341,82 @@ None.
 
 ---
 
+## REQ-19: Print Button + Page-Break Print Layout
+
+**Status:** Ready to build
+**Priority:** —
+**Section affected:** Results panel button row (`.rp-btn-row`) + `@media print` styles
+
+### Current state
+
+There is no print button in the UI. The `@media print` block exists but is minimal — it hides the sidebar, shows `.mobile-results`, and applies `break-inside: avoid` to cards. There is no page-break strategy for the main content sections. The existing "Download PDF" button uses html2canvas + jsPDF to capture the results panel as a flat image; it does not produce a structured, multi-page print document.
+
+### Requirement
+
+Add a **Print** button to the results panel button row. When clicked it calls `window.print()`. Update the `@media print` block so the full scorecard form (left column) prints in a clean, paginated layout with intentional page breaks between major sections.
+
+### Suggested page-break strategy
+
+| Break location | Rule |
+|---|---|
+| Before Section 01 (Portfolio Shell) | `break-before: page` |
+| Before Section 02 (Projects / Case Studies) | `break-before: page` |
+| Before Section 03 (Strategy) | `break-before: page` |
+| Between individual case study blocks | `break-before: page` — open question: only if more than 2 case studies, or always? |
+| Inside cards, stat rows, dot rows | `break-inside: avoid` (already in place) |
+| Results panel sidebar | `display: none` — already hidden; results print inline via `.mobile-results` |
+
+Section 00 (Context) should start at the top of page 1 with no leading break.
+
+### Suggested implementation
+
+**JSX — add Print button:**
+
+```jsx
+<div className="rp-btn-row">
+  <button className="btn btn-ghost" onClick={onReset}>Reset</button>
+  <button className="btn btn-ghost" onClick={onShare}>Share</button>
+  <button className="btn btn-ghost" onClick={() => window.print()}>Print</button>
+  <button className="btn btn-fill" onClick={handleDownload} disabled={downloading}>
+    {downloading ? 'Generating...' : 'Download PDF'}
+  </button>
+</div>
+```
+
+**CSS — extend `@media print`:**
+
+```css
+@media print {
+  /* existing rules stay */
+
+  /* Page breaks between main sections */
+  .section + .section { break-before: page; }
+
+  /* Exception: keep Section 00 on page 1, no leading break */
+  .main > .section:first-child { break-before: auto; }
+
+  /* Each case study block starts a new page if there are multiple */
+  .cs-block { break-before: page; }
+  .cs-block:first-child { break-before: auto; }
+
+  /* Hide interactive-only controls */
+  .ladder-mode-toggle, .rp-btn-row { display: none; }
+
+  /* Ensure main column spans full width */
+  .main { width: 100%; max-width: 100%; }
+}
+```
+
+### State changes
+
+None — print is stateless (`window.print()`).
+
+### Open questions
+
+1. **Case study page breaks** — should every `.cs-block` get `break-before: page`, or only when there are 3 or more case studies? Breaking on every one with just 1–2 case studies wastes paper.
+
+---
+
 ## REQ-13: Portfolio Purpose Framework & Leadership Dimensions
 
 **Status:** Brainstorming — needs exploration before build
@@ -1497,4 +1573,5 @@ const LENSES = {
 | REQ-15 | Accessibility pass & typography scale | Ready to build (Phase 1 type scale, Phase 2 full WCAG audit) | None |
 | REQ-16 | Rename "Case Studies" → "Project / Case Study" | Ready to build | None |
 | REQ-18 | Career Blueprint track layout — remove card, keep label color | Ready to build | None |
+| REQ-19 | Print button + page-break print layout | Ready to build | 1 (where exactly to break between case studies) |
 | REQ-13 | Portfolio Purpose Framework & Leadership dims | Brainstorming (always last — requires scorecard version bump) | 4 (scope, placement, lens visibility, standalone vs integrated) |
