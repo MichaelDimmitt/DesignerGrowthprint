@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.24",
+      "file": "portfolio-scorecard-v0.24.html",
+      "date": "2026-03-17",
+      "description": "REQ-19: Print button + page-break print layout (section breaks, 3+ case study breaks)",
+      "cheeky": false
+    },
+    {
       "version": "v0.23",
       "file": "portfolio-scorecard-v0.23.html",
       "date": "2026-03-17",
