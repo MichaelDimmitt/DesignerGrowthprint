@@ -1,0 +1,12 @@
+{
+  "tool": "UX Designer Scorecard",
+  "releases": [
+    {
+      "version": "v0.1",
+      "file": "ux-designer-scorecard-v0.1.html",
+      "date": "2024-03-17",
+      "description": "The original — where it all began",
+      "cheeky": false
+    }
+  ]
+}
