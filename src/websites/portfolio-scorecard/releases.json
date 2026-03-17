@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.9",
+      "file": "portfolio-scorecard-v0.9.html",
+      "date": "2026-03-17",
+      "description": "REQ-07: Added Design Disciplines multi-select section",
+      "cheeky": false
+    },
+    {
       "version": "v0.8",
       "file": "portfolio-scorecard-v0.8.html",
       "date": "2026-03-17",
