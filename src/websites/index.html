@@ -207,8 +207,6 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
     }
 
     .tool-stat {
@@ -222,6 +220,90 @@
     .tool-stat span {
       color: var(--text-secondary);
       font-weight: 700;
+    }
+
+    /* Version Selector */
+    .tool-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .version-select {
+      position: relative;
+    }
+
+    .version-select select {
+      appearance: none;
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 28px 6px 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .version-select select:hover,
+    .version-select select:focus {
+      border-color: var(--accent-teal);
+    }
+
+    .tool-card.coral .version-select select:hover,
+    .tool-card.coral .version-select select:focus {
+      border-color: var(--accent-coral);
+    }
+
+    .tool-card.purple .version-select select:hover,
+    .tool-card.purple .version-select select:focus {
+      border-color: var(--accent-purple);
+    }
+
+    .version-select::after {
+      content: 'â–¼';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .launch-btn {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .launch-btn:hover {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      color: var(--bg-base);
+    }
+
+    .tool-card.coral .launch-btn:hover {
+      background: var(--accent-coral);
+      border-color: var(--accent-coral);
+    }
+
+    .tool-card.purple .launch-btn:hover {
+      background: var(--accent-purple);
+      border-color: var(--accent-purple);
     }
 
     /* Footer */
@@ -282,22 +364,31 @@
     </div>
 
     <div class="tool-grid">
-      <a href="portfolio-scorecard/portfolio-scorecard-v0.1.html" class="tool-card teal">
+      <div class="tool-card teal">
         <div class="tool-header">
-          <div class="tool-icon">=Ë</div>
+          <div class="tool-icon">&#128203;</div>
           <span class="tool-status status-active">Active Dev</span>
         </div>
         <h2 class="tool-name">Portfolio Scorecard</h2>
-        <p class="tool-description">Structured evaluation of a designer's portfolio  shell, case studies, and strategy. Rate dimensions on a 15 scale and get per-section breakdowns.</p>
+        <p class="tool-description">Structured evaluation of a designer's portfolio â€” shell, case studies, and strategy. Rate dimensions on a 1â€“5 scale and get per-section breakdowns.</p>
         <div class="tool-meta">
           <span class="tool-stat">Sections: <span>3</span></span>
-          <span class="tool-stat">Scale: <span>15</span></span>
+          <span class="tool-stat">Scale: <span>1â€“5</span></span>
         </div>
-      </a>
+        <div class="tool-footer">
+          <div class="version-select">
+            <select id="portfolio-version" onchange="updateLaunchLink('portfolio')">
+              <option value="portfolio-scorecard/portfolio-scorecard-v0.2.html">v0.2 (latest)</option>
+              <option value="portfolio-scorecard/portfolio-scorecard-v0.1.html">v0.1</option>
+            </select>
+          </div>
+          <a href="portfolio-scorecard/portfolio-scorecard-v0.2.html" id="portfolio-launch" class="launch-btn">Launch &#8594;</a>
+        </div>
+      </div>
 
-      <a href="ux-designer-scorecard/ux-designer-scorecard-v0.1.html" class="tool-card coral">
+      <div class="tool-card coral">
         <div class="tool-header">
-          <div class="tool-icon"><¯</div>
+          <div class="tool-icon">&#127919;</div>
           <span class="tool-status status-stable">Stable</span>
         </div>
         <h2 class="tool-name">UX Designer Scorecard</h2>
@@ -306,11 +397,19 @@
           <span class="tool-stat">Max Score: <span>130</span></span>
           <span class="tool-stat">Archetypes: <span>6</span></span>
         </div>
-      </a>
+        <div class="tool-footer">
+          <div class="version-select">
+            <select id="ux-version" onchange="updateLaunchLink('ux')">
+              <option value="ux-designer-scorecard/ux-designer-scorecard-v0.1.html">v0.1 (latest)</option>
+            </select>
+          </div>
+          <a href="ux-designer-scorecard/ux-designer-scorecard-v0.1.html" id="ux-launch" class="launch-btn">Launch &#8594;</a>
+        </div>
+      </div>
 
-      <a href="competency-radar/competency-radar-v0.1.html" class="tool-card purple">
+      <div class="tool-card purple">
         <div class="tool-header">
-          <div class="tool-icon">=Ê</div>
+          <div class="tool-icon">&#128202;</div>
           <span class="tool-status status-stable">Stable</span>
         </div>
         <h2 class="tool-name">Competency Radar</h2>
@@ -319,12 +418,28 @@
           <span class="tool-stat">Archetypes: <span>7</span></span>
           <span class="tool-stat">Levels: <span>5</span></span>
         </div>
-      </a>
+        <div class="tool-footer">
+          <div class="version-select">
+            <select id="radar-version" onchange="updateLaunchLink('radar')">
+              <option value="competency-radar/competency-radar-v0.1.html">v0.1 (latest)</option>
+            </select>
+          </div>
+          <a href="competency-radar/competency-radar-v0.1.html" id="radar-launch" class="launch-btn">Launch &#8594;</a>
+        </div>
+      </div>
     </div>
   </main>
 
   <footer>
-    <p class="footer-text">Jax UX Design Community · <a href="https://github.com/michaeldimmitt/DesignerGrowthprint">GitHub</a></p>
+    <p class="footer-text">Jax UX Design Community &#183; <a href="https://github.com/michaeldimmitt/DesignerGrowthprint">GitHub</a></p>
   </footer>
+
+  <script>
+    function updateLaunchLink(tool) {
+      const select = document.getElementById(tool + '-version');
+      const launch = document.getElementById(tool + '-launch');
+      launch.href = select.value;
+    }
+  </script>
 </body>
 </html>
