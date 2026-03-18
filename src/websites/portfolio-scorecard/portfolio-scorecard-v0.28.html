@@ -1032,17 +1032,91 @@ function ResultsPanel({ designerName, reviewerName, reviewerType, archetype, cus
   const panelRef = React.useRef(null);
 
   const handleDownload = async () => {
-    if (!panelRef.current || downloading) return;
+    if (downloading) return;
     setDownloading(true);
+    let exportHost = null;
     try {
-      const canvas = await html2canvas(panelRef.current, {
-        scale: 2,
+      // Export the left page content (main) to match print-style output.
+      let captureEl = document.querySelector('.main');
+      if (!captureEl || captureEl.getBoundingClientRect().height === 0) {
+        throw new Error('No visible main content found for export');
+      }
+
+      const rect = captureEl.getBoundingClientRect();
+      const captureWidth = Math.max(Math.ceil(rect.width), 320);
+
+      // Clone into an offscreen host so capture is not clipped by sidebar scrolling.
+      exportHost = document.createElement('div');
+      exportHost.style.position = 'fixed';
+      exportHost.style.left = '-100000px';
+      exportHost.style.top = '0';
+      exportHost.style.width = `${captureWidth}px`;
+      exportHost.style.background = '#ffffff';
+      exportHost.style.zIndex = '-1';
+
+      const exportPanel = captureEl.cloneNode(true);
+      exportPanel.style.width = `${captureWidth}px`;
+      exportPanel.style.maxHeight = 'none';
+      exportPanel.style.height = 'auto';
+      exportPanel.style.overflow = 'visible';
+      exportPanel.style.background = '#ffffff';
+      exportPanel.style.color = '#111111';
+      exportPanel.style.paddingBottom = '0';
+
+      // Mirror print output: hide interactive controls and show inline results panel.
+      exportPanel.querySelectorAll('.btn, .rp-btn-row, .theme-toggle, .grain, .ladder-mode-toggle, .add-cs-btn, .cs-remove').forEach(el => el.remove());
+      exportPanel.querySelectorAll('.mobile-results').forEach(el => {
+        el.style.display = 'block';
+        el.style.marginTop = '24px';
+      });
+
+      // Print readability overrides.
+      exportPanel.querySelectorAll('.rp-bar-label').forEach((el) => {
+        el.style.width = '160px';
+        el.style.whiteSpace = 'normal';
+        el.style.overflow = 'visible';
+        el.style.textOverflow = 'clip';
+      });
+
+      // html2canvas can throw addColorStop non-finite on some gradients.
+      exportPanel.querySelectorAll('*').forEach((el) => {
+        const bg = window.getComputedStyle(el).backgroundImage;
+        if (bg && bg !== 'none') {
+          el.style.backgroundImage = 'none';
+        }
+      });
+
+      const gradientBar = exportPanel.querySelector('.rp-gradient-bar');
+      if (gradientBar) gradientBar.style.background = '#00b8a0';
+
+      exportHost.appendChild(exportPanel);
+      document.body.appendChild(exportHost);
+
+      // Wait one frame for layout before rasterizing.
+      await new Promise(resolve => requestAnimationFrame(resolve));
+
+      const captureScale = 2;
+      const panelTop = exportPanel.getBoundingClientRect().top;
+      const sectionEndsPx = [...exportPanel.querySelectorAll('.section')]
+        .map((m) => Math.round((m.getBoundingClientRect().bottom - panelTop) * captureScale))
+        .filter((y) => y > 0)
+        .sort((a, b) => a - b);
+
+      const canvas = await html2canvas(exportPanel, {
+        scale: captureScale,
         backgroundColor: '#ffffff',
         logging: false,
         useCORS: true,
-        windowWidth: panelRef.current.scrollWidth,
-        windowHeight: panelRef.current.scrollHeight,
+        width: exportPanel.scrollWidth,
+        height: exportPanel.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
       });
+
+      if (!canvas.width || !canvas.height) {
+        throw new Error('Export canvas is empty');
+      }
+
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF('p', 'mm', 'a4');
 
@@ -1050,11 +1124,44 @@ function ResultsPanel({ designerName, reviewerName, reviewerType, archetype, cus
       const pageHeightMm = 277;
       const pxPerMm = canvas.width / pageWidthMm;
       const pageHeightPx = Math.floor(pageHeightMm * pxPerMm);
+      const sourceCtx = canvas.getContext('2d', { willReadFrequently: true });
 
-      let renderedPx = 0;
-      let page = 0;
-      while (renderedPx < canvas.height) {
-        const sliceHeightPx = Math.min(pageHeightPx, canvas.height - renderedPx);
+      const findSoftBreakY = (startY, idealEndY, maxY) => {
+        if (!sourceCtx) return idealEndY;
+
+        const minSlice = 220;
+        const searchRadius = 140;
+        const searchStart = Math.max(startY + minSlice, idealEndY - searchRadius);
+        const searchEnd = Math.min(maxY - 20, idealEndY + searchRadius);
+
+        if (searchEnd <= searchStart) return idealEndY;
+
+        let bestY = idealEndY;
+        let bestInk = Number.POSITIVE_INFINITY;
+
+        for (let y = searchStart; y <= searchEnd; y += 2) {
+          const row = sourceCtx.getImageData(0, y, canvas.width, 1).data;
+          let ink = 0;
+
+          // Sample every 4th pixel to keep this fast.
+          for (let i = 0; i < row.length; i += 16) {
+            const r = row[i];
+            const g = row[i + 1];
+            const b = row[i + 2];
+            const a = row[i + 3];
+            if (a > 8 && (r < 245 || g < 245 || b < 245)) ink += 1;
+          }
+
+          if (ink < bestInk) {
+            bestInk = ink;
+            bestY = y;
+          }
+        }
+
+        return bestY;
+      };
+
+      const addSliceToPdf = (startY, sliceHeightPx, pageIndex) => {
         const pageCanvas = document.createElement('canvas');
         pageCanvas.width = canvas.width;
         pageCanvas.height = sliceHeightPx;
@@ -1065,7 +1172,7 @@ function ResultsPanel({ designerName, reviewerName, reviewerType, archetype, cus
         ctx.drawImage(
           canvas,
           0,
-          renderedPx,
+          startY,
           canvas.width,
           sliceHeightPx,
           0,
@@ -1077,19 +1184,44 @@ function ResultsPanel({ designerName, reviewerName, reviewerType, archetype, cus
         const imgData = pageCanvas.toDataURL('image/png');
         const sliceHeightMm = sliceHeightPx / pxPerMm;
 
-        if (page > 0) pdf.addPage();
+        if (pageIndex > 0) pdf.addPage();
         pdf.addImage(imgData, 'PNG', 10, 10, pageWidthMm, sliceHeightMm);
+      };
 
-        renderedPx += sliceHeightPx;
-        page += 1;
+      const segmentEnds = sectionEndsPx
+        .filter((y) => y > 0 && y < canvas.height)
+        .concat([canvas.height]);
+
+      let page = 0;
+      let segmentStart = 0;
+      for (const segmentEnd of segmentEnds) {
+        let cursor = segmentStart;
+        while (cursor < segmentEnd) {
+          const segmentRemaining = segmentEnd - cursor;
+          let sliceHeightPx = Math.min(pageHeightPx, segmentRemaining);
+
+          // If a single section exceeds one page, split within that section only.
+          if (segmentRemaining > pageHeightPx) {
+            const idealEndY = cursor + pageHeightPx;
+            const breakY = findSoftBreakY(cursor, idealEndY, segmentEnd);
+            sliceHeightPx = Math.max(220, Math.min(segmentRemaining, breakY - cursor));
+          }
+
+          addSliceToPdf(cursor, sliceHeightPx, page);
+          cursor += sliceHeightPx;
+          page += 1;
+        }
+        segmentStart = segmentEnd;
       }
 
       const filename = designerName ? `portfolio-scorecard-${designerName.toLowerCase().replace(/\s+/g, '-')}.pdf` : 'portfolio-scorecard.pdf';
       pdf.save(filename);
     } catch (err) {
       console.error('Download failed:', err);
-      window.print(); // Fallback to print
     } finally {
+      if (exportHost && exportHost.parentNode) {
+        exportHost.parentNode.removeChild(exportHost);
+      }
       setDownloading(false);
     }
   };
