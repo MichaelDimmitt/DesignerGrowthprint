@@ -2,6 +2,13 @@
   "tool": "Competency Radar",
   "releases": [
     {
+      "version": "v0.2",
+      "file": "competency-radar-v0.2.html",
+      "date": "2026-03-18",
+      "description": "Added btn-ghost button styling to support Return Home action",
+      "cheeky": false
+    },
+    {
       "version": "v0.1",
       "file": "competency-radar-v0.1.html",
       "date": "2024-03-17",
