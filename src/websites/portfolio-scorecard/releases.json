@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.28",
+      "file": "portfolio-scorecard-v0.28.html",
+      "date": "2026-03-17",
+      "description": "Download PDF: left-page print-style export with section-based page breaks",
+      "cheeky": false
+    },
+    {
       "version": "v0.27",
       "file": "portfolio-scorecard-v0.27.html",
       "date": "2026-03-17",
