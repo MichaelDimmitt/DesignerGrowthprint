@@ -2,6 +2,13 @@
   "tool": "Portfolio Scorecard",
   "releases": [
     {
+      "version": "v0.29",
+      "file": "portfolio-scorecard-v0.29.html",
+      "date": "2026-03-18",
+      "description": "Updated btn-ghost styling and carried Return to Home flow into new version",
+      "cheeky": false
+    },
+    {
       "version": "v0.28",
       "file": "portfolio-scorecard-v0.28.html",
       "date": "2026-03-17",

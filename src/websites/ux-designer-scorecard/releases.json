@@ -2,6 +2,13 @@
   "tool": "UX Designer Scorecard",
   "releases": [
     {
+      "version": "v0.2",
+      "file": "ux-designer-scorecard-v0.2.html",
+      "date": "2026-03-18",
+      "description": "Added expanded btn-ghost styling and carried Return Home action into new version",
+      "cheeky": false
+    },
+    {
       "version": "v0.1",
       "file": "ux-designer-scorecard-v0.1.html",
       "date": "2024-03-17",
